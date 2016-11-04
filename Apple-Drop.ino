@@ -38,8 +38,10 @@
 
 #include <MeggyJrSimple.h>    // Required code, line 1 of 2.
 
-int xgreendot = random(8);
-int ygreendot = 7;
+int xGreendot = random(8);
+int yGreendot = 7;
+int xVioletdot = random(8);
+int yVioletdot = 7;
 int direction = 180;
 
 void setup()                    // run once, when the sketch starts
@@ -49,33 +51,59 @@ void setup()                    // run once, when the sketch starts
 
 void loop()                     // run over and over again
 {
-  drawgreendot();      // draw green dot
-  updategreendot();   // update the dot's movement
+  drawGreendot();      // draw green dot
+  updateGreendot();   // update the dot's movement
+  
   DisplaySlate();
   delay(500);
-  
   ClearSlate();
+
+  
+  drawVioletdot;
+  updateVioletdot();
+  DisplaySlate();
 }
 
 
-void updategreendot()
+void updateGreendot()       // Update green dot movement
 {
-  // Moves apple down
+  // Moves green dot down 1 space 
   if (direction == 180)
   {
-    ygreendot = ygreendot - 1;
+    yGreendot = yGreendot - 1; 
 
-    if (ygreendot < 0)    // If dot goes below y=0
+    if (yGreendot < 0)    // If dot goes below y=0
     {
-      ygreendot = 7;      // Set y=7
-      xgreendot = random(8);   // Set to random x
+      yGreendot = 7;      // Set y=7
+      xGreendot = random(8);   // Set to random x
     }
  
   }
 }
 
-void drawgreendot()
+void drawGreendot()
 {
-  DrawPx(xgreendot,ygreendot,Green);  // Draws a dot at random x, y=7
+  DrawPx(xGreendot,yGreendot,Green);  // Draws a dot at random x, y=7
+}
+
+
+void updateVioletdot()    // Update violet dot movement
+{
+  if (direction == 180)
+  {
+    yVioletdot = yVioletdot - 1;  
+
+    if (yVioletdot < 0)
+    {
+      yVioletdot = 7;
+      xVioletdot = random(8);
+    }
+  }
+  
+}
+
+void drawVioletdot()
+{
+  DrawPx(xVioletdot,yVioletdot,Violet);  // Draws violet dot random x, y=7
 }
 
