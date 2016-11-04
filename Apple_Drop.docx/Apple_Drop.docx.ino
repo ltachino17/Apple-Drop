@@ -38,6 +38,10 @@
 
 #include <MeggyJrSimple.h>    // Required code, line 1 of 2.
 
+int xgreendot = random(8);
+int ygreendot = 7;
+int direction = 180;
+
 void setup()                    // run once, when the sketch starts
 {
   MeggyJrSimpleSetup();      // Required code, line 2 of 2.
@@ -45,9 +49,33 @@ void setup()                    // run once, when the sketch starts
 
 void loop()                     // run over and over again
 {
-
+  drawgreendot();      // draw green dot
+  updategreendot();   // update the dot's movement
+  DisplaySlate();
+  delay(500);
   
-  
+  ClearSlate();
 }
 
+
+void updategreendot()
+{
+  // Moves apple down
+  if (direction == 180)
+  {
+    ygreendot = ygreendot - 1;
+
+    if (ygreendot < 0)    // If dot goes below y=0
+    {
+      ygreendot = 7;      // Set y=7
+      xgreendot = random(8);   // Set to random x
+    }
+ 
+  }
+}
+
+void drawgreendot()
+{
+  DrawPx(xgreendot,ygreendot,Green);  // Draws a dot at random x, y=7
+}
 
