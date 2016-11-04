@@ -43,6 +43,7 @@ int yGreendot = 7;
 int xVioletdot = random(8);
 int yVioletdot = 7;
 int direction = 180;
+int timer = 0;
 
 void setup()                    // run once, when the sketch starts
 {
@@ -55,11 +56,16 @@ void loop()                     // run over and over again
   updateGreendot();   // update the dot's movement
   
   DisplaySlate();
-  delay(500);
+  delay(600);
   ClearSlate();
 
-  
-  drawVioletdot;
+  //Increment the timer
+  timer++;
+  if(timer > 10)
+  {
+    timer = 0;
+  }
+  drawVioletdot();
   updateVioletdot();
   DisplaySlate();
 }
