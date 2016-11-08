@@ -42,6 +42,8 @@ int xGreendot = random(8);
 int yGreendot = 7;
 int xVioletdot = random(8);
 int yVioletdot = 7;
+int xWhitedot = random(8);
+int yWhitedot = 7;
 int direction = 180;
 int timer = 0;
 
@@ -65,9 +67,26 @@ void loop()                     // run over and over again
   {
     timer = 0;
   }
-  drawVioletdot();
-  updateVioletdot();
-  DisplaySlate();
+
+  if (ReadPx(xVioletdot,yVioletdot) == Dark)
+  {
+    drawVioletdot();
+    updateVioletdot();
+    DisplaySlate();
+  }
+
+
+  timer++;
+  if(timer > 10)
+  {
+    timer = 0 ;
+  }
+  if (ReadPx(xWhitedot,yWhitedot) == Dark)
+  {
+    drawWhitedot();
+    updateWhitedot();
+    DisplaySlate();
+  }
 }
 
 
@@ -111,5 +130,25 @@ void updateVioletdot()    // Update violet dot movement
 void drawVioletdot()
 {
   DrawPx(xVioletdot,yVioletdot,Violet);  // Draws violet dot random x, y=7
+}
+
+
+void updateWhitedot()   // Update white dot movement
+{
+  if (direction == 180)
+  {
+    yWhitedot = yWhitedot - 1;
+
+    if (yWhitedot < 0)
+    {
+      yWhitedot = 7;
+      xWhitedot = random(8);
+    }
+  }
+}
+
+void drawWhitedot()
+{
+  DrawPx(xWhitedot,yWhitedot,White);  // Draw a white dot
 }
 
