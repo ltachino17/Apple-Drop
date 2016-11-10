@@ -38,14 +38,16 @@
 
 #include <MeggyJrSimple.h>    // Required code, line 1 of 2.
 
-int xGreendot = random(8);
-int yGreendot = 7;
-int xVioletdot = random(8);
-int yVioletdot = 7;
-int xWhitedot = random(8);
-int yWhitedot = 7;
-int direction = 180;
-int timer = 0;
+struct Enemy
+{
+  int x;
+  int y;
+};
+
+Enemy e1 = {0,0};
+Enemy e2 = {0,0};
+Enemy e3 = {0,0};
+Enemy enemies[3] = {e1,e2,e3};
 
 void setup()                    // run once, when the sketch starts
 {
@@ -54,101 +56,54 @@ void setup()                    // run once, when the sketch starts
 
 void loop()                     // run over and over again
 {
-  drawGreendot();      // draw green dot
-  updateGreendot();   // update the dot's movement
-  
-  DisplaySlate();
-  delay(600);
-  ClearSlate();
-
-  //Increment the timer
-  timer++;
-  if(timer > 10)
-  {
-    timer = 0;
-  }
-
-  if (ReadPx(xVioletdot,yVioletdot) == Dark)
-  {
-    drawVioletdot();
-    updateVioletdot();
-    DisplaySlate();
-  }
-
-
-  timer++;
-  if(timer > 10)
-  {
-    timer = 0 ;
-  }
-  if (ReadPx(xWhitedot,yWhitedot) == Dark)
-  {
-    drawWhitedot();
-    updateWhitedot();
-    DisplaySlate();
-  }
-}
-
-
-void updateGreendot()       // Update green dot movement
-{
-  // Moves green dot down 1 space 
-  if (direction == 180)
-  {
-    yGreendot = yGreendot - 1; 
-
-    if (yGreendot < 0)    // If dot goes below y=0
-    {
-      yGreendot = 7;      // Set y=7
-      xGreendot = random(8);   // Set to random x
-    }
- 
-  }
-}
-
-void drawGreendot()
-{
-  DrawPx(xGreendot,yGreendot,Green);  // Draws a dot at random x, y=7
-}
-
-
-void updateVioletdot()    // Update violet dot movement
-{
-  if (direction == 180)
-  {
-    yVioletdot = yVioletdot - 1;  
-
-    if (yVioletdot < 0)
-    {
-      yVioletdot = 7;
-      xVioletdot = random(8);
-    }
-  }
   
 }
 
-void drawVioletdot()
+void updateEnemies()
 {
-  DrawPx(xVioletdot,yVioletdot,Violet);  // Draws violet dot random x, y=7
-}
-
-
-void updateWhitedot()   // Update white dot movement
-{
-  if (direction == 180)
+  for (int i = 0; i < 3; i++)
   {
-    yWhitedot = yWhitedot - 1;
-
-    if (yWhitedot < 0)
-    {
-      yWhitedot = 7;
-      xWhitedot = random(8);
-    }
+    enemies[i].y--;        // enemies move down one space
+    if(enemies[i].y < 0)   // if enemy goes off screen
+    spawn(i);              // spawn enemy
   }
 }
 
-void drawWhitedot()
+void spawn(int index)
 {
-  DrawPx(xWhitedot,yWhitedot,White);  // Draw a white dot
+  // Set y to 7
+
+  //Generate a random x
+  int x;
+  do
+  {
+   x = random(8);
+  }
+  while(checkDupe(x,7) == true ||
+       checkDupe(x,6) == true ||
+       checkDupe(x,5) == true)
+  enemies[index].x = x;
+  enemies[index].y = 7;
+}
+
+boolean checkDupe(int x, int y)
+{
+  for(int i = 0; i < 3; i++)
+  {
+    if(x == enemies[i].x)
+    {
+      if(y == enemies[i].y)
+      return true;
+    }
+  }
+  return false;
+}
+
+void drawEnemies()
+{
+  for(int i = 0; i < 3; i++)
+  {
+    DrawPx(enemies[i].x,enemies[i].y,White);
+  }
 }
 
