@@ -44,15 +44,17 @@ struct Enemy
   int y;
 };
 
-Enemy e1 = {0,0};
-Enemy e2 = {0,0};
-Enemy e3 = {0,0};
+Enemy e1 = {2,7};
+Enemy e2 = {4,9};
+Enemy e3 = {7,11};
 Enemy enemies[3] = {e1,e2,e3};
 
 void setup()                    // run once, when the sketch starts
 {
   MeggyJrSimpleSetup();      // Required code, line 2 of 2.
+  Serial.begin(9600);
 }
+
 
 void loop()                     // run over and over again
 {
@@ -82,14 +84,15 @@ void spawn(int index)
   int x;
   do
   {
-   x = random(8);
+   x = random(8);         // set x to random value
   }
-  while(checkDupe(x,7) == true ||
-       checkDupe(x,6) == true ||
-       checkDupe(x,5) == true);
+  while(checkDupe(x,7) == true ||   // check y=7 row
+       checkDupe(x,6) == true ||    // check y=6 row
+       checkDupe(x,5) == true);     // check y=5 row
   enemies[index].x = x;
   enemies[index].y = 7;
 }
+
 
 boolean checkDupe(int x, int y)
 {
@@ -108,7 +111,11 @@ void drawEnemies()
 {
   for(int i = 0; i < 3; i++)
   {
-    DrawPx(enemies[i].x,enemies[i].y,White);
+    if (enemies[i].y < 8)      // if the value id less than 8
+    {
+      DrawPx(enemies[i].x,enemies[i].y,White); // draw white dot
+    }
+    
   }
 }
 
