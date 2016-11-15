@@ -45,10 +45,12 @@ struct Enemy
 };
 
 Enemy e1 = {2,7};
-Enemy e2 = {7,9};
+Enemy e2 = {6,9};
 Enemy e3 = {4,11};
 Enemy e4 = {1,13};
 Enemy enemies[4] = {e1,e2,e3,e4};
+int xapple = random(8);
+int yapple = 10;
 
 void setup()                    // run once, when the sketch starts
 {
@@ -60,7 +62,9 @@ void setup()                    // run once, when the sketch starts
 void loop()                     // run over and over again
 {
   drawEnemies();
+  drawApple();
   updateEnemies();
+  updateApple();
   DisplaySlate();
   delay(600);
   ClearSlate();
@@ -119,4 +123,33 @@ void drawEnemies()
     
   }
 }
+
+void updateApple()
+{
+  for (int i = 0; i < 1; i++)
+  {
+    yapple = yapple - 1;
+    if (yapple < 0)
+    {
+      yapple = 7;
+
+      do
+      {
+       xapple = random(8);         // set x to random value
+      }
+      while(checkDupe(xapple,7) == true ||   // check y=7 row
+           checkDupe(xapple,6) == true ||    // check y=6 row
+           checkDupe(xapple,5) == true);
+    }
+  }
+}
+
+void drawApple()
+{
+  if (yapple < 8)
+  {
+    DrawPx(xapple,yapple,Red);
+  }
+}
+
 
