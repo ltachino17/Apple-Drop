@@ -56,6 +56,11 @@ void setup()                    // run once, when the sketch starts
 
 void loop()                     // run over and over again
 {
+  drawEnemies();
+  updateEnemies();
+  DisplaySlate();
+  delay(600);
+  ClearSlate();
   
 }
 
@@ -72,7 +77,7 @@ void updateEnemies()
 void spawn(int index)
 {
   // Set y to 7
-
+  int y = 7;
   //Generate a random x
   int x;
   do
@@ -81,7 +86,7 @@ void spawn(int index)
   }
   while(checkDupe(x,7) == true ||
        checkDupe(x,6) == true ||
-       checkDupe(x,5) == true)
+       checkDupe(x,5) == true);
   enemies[index].x = x;
   enemies[index].y = 7;
 }
