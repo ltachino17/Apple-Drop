@@ -45,14 +45,15 @@ struct Enemy
 };
 
 Enemy e1 = {2,7};
-Enemy e2 = {4,9};
-Enemy e3 = {7,11};
-Enemy enemies[3] = {e1,e2,e3};
+Enemy e2 = {7,9};
+Enemy e3 = {4,11};
+Enemy e4 = {1,13};
+Enemy enemies[4] = {e1,e2,e3,e4};
 
 void setup()                    // run once, when the sketch starts
 {
   MeggyJrSimpleSetup();      // Required code, line 2 of 2.
-  Serial.begin(9600);
+  
 }
 
 
@@ -68,7 +69,7 @@ void loop()                     // run over and over again
 
 void updateEnemies()
 {
-  for (int i = 0; i < 3; i++)
+  for (int i = 0; i < 4; i++)
   {
     enemies[i].y--;        // enemies move down one space
     if(enemies[i].y < 0)   // if enemy goes off screen
@@ -96,7 +97,7 @@ void spawn(int index)
 
 boolean checkDupe(int x, int y)
 {
-  for(int i = 0; i < 3; i++)
+  for(int i = 0; i < 4; i++)
   {
     if(x == enemies[i].x)
     {
@@ -109,7 +110,7 @@ boolean checkDupe(int x, int y)
 
 void drawEnemies()
 {
-  for(int i = 0; i < 3; i++)
+  for(int i = 0; i < 4; i++)
   {
     if (enemies[i].y < 8)      // if the value id less than 8
     {
