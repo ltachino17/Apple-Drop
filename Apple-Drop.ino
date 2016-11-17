@@ -52,6 +52,7 @@ int xapple = random(8);
 int yapple = 9;
 int xbasket = 3;
 int ybasket = 1;
+int binary = 0;
 
 void setup()                    // run once, when the sketch starts
 {
@@ -68,6 +69,17 @@ void loop()                     // run over and over again
   updateEnemies();
   updateApple();
   updateBasket();
+  // Has apple been eaten?
+  if (ReadPx(xapple,yapple) == Violet)
+  {
+    Tone_Start(11100,50);  // Play sound if apple is eaten
+    binary = binary * 2 + 1;  // set aux leds
+    if (binary > 255)       // restart if all LEDs are filled
+    {
+      binary = 0;
+    }
+  }
+  SetAuxLEDs(binary);   // Show aux leds
   DisplaySlate();
   delay(280);
   ClearSlate();
@@ -162,7 +174,7 @@ void updateBasket()
 {
   CheckButtonsPress();
   CheckButtonsDown();
-  if (Button_Left)
+  if (Button_Left)   // if left button pressed
   {
     xbasket = xbasket - 1;  // move one space to left
     // no wrap if basket is at edge of screen
@@ -172,7 +184,7 @@ void updateBasket()
     }
   }
 
-  if (Button_Right)
+  if (Button_Right)  // if right button pressed
   {
     xbasket = xbasket + 1;   // move one space to right
     // no wrap if basket is at edge of screen
