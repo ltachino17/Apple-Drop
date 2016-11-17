@@ -45,12 +45,13 @@ struct Enemy
 };
 
 Enemy e1 = {2,7};
-Enemy e2 = {6,9};
-Enemy e3 = {4,11};
-Enemy e4 = {1,13};
-Enemy enemies[4] = {e1,e2,e3,e4};
+Enemy e2 = {6,11};
+Enemy e3 = {4,13};
+Enemy enemies[3] = {e1,e2,e3};
 int xapple = random(8);
-int yapple = 10;
+int yapple = 9;
+int xbasket = 3;
+int ybasket = 1;
 
 void setup()                    // run once, when the sketch starts
 {
@@ -63,17 +64,19 @@ void loop()                     // run over and over again
 {
   drawEnemies();
   drawApple();
+  drawBasket();
   updateEnemies();
   updateApple();
+  updateBasket();
   DisplaySlate();
-  delay(600);
+  delay(280);
   ClearSlate();
   
 }
 
 void updateEnemies()
 {
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 3; i++)
   {
     enemies[i].y--;        // enemies move down one space
     if(enemies[i].y < 0)   // if enemy goes off screen
@@ -101,7 +104,7 @@ void spawn(int index)
 
 boolean checkDupe(int x, int y)
 {
-  for(int i = 0; i < 4; i++)
+  for(int i = 0; i < 3; i++)
   {
     if(x == enemies[i].x)
     {
@@ -114,7 +117,7 @@ boolean checkDupe(int x, int y)
 
 void drawEnemies()
 {
-  for(int i = 0; i < 4; i++)
+  for(int i = 0; i < 3; i++)
   {
     if (enemies[i].y < 8)      // if the value id less than 8
     {
@@ -128,28 +131,60 @@ void updateApple()
 {
   for (int i = 0; i < 1; i++)
   {
-    yapple = yapple - 1;
+    yapple = yapple - 1;     // apple moves down one space
+    
+    // Corrects for out of bounds
     if (yapple < 0)
     {
-      yapple = 7;
+      yapple = 7;        // sets y to 7
 
       do
       {
        xapple = random(8);         // set x to random value
       }
-      while(checkDupe(xapple,7) == true ||   // check y=7 row
-           checkDupe(xapple,6) == true ||    // check y=6 row
-           checkDupe(xapple,5) == true);
+      while(checkDupe(xapple,7) == true ||   // checks (xapple,7) for any dots
+           checkDupe(xapple,6) == true ||    // check (xapple,6) for any dots
+           checkDupe(xapple,5) == true);     // check (xapple,5) for any dots
     }
   }
 }
 
 void drawApple()
 {
-  if (yapple < 8)
+  if (yapple < 8)  // if y value is less than 8
   {
-    DrawPx(xapple,yapple,Red);
+    DrawPx(xapple,yapple,Red);   // draws apple
   }
 }
 
+
+void updateBasket()
+{
+  CheckButtonsPress();
+  CheckButtonsDown();
+  if (Button_Left)
+  {
+    xbasket = xbasket - 1;  // move one space to left
+    // no wrap if basket is at edge of screen
+    if (xbasket < 0)
+    {
+      xbasket = 0;  
+    }
+  }
+
+  if (Button_Right)
+  {
+    xbasket = xbasket + 1;   // move one space to right
+    // no wrap if basket is at edge of screen
+    if (xbasket > 7)
+    {
+      xbasket = 7;
+    }
+  }
+}
+
+void drawBasket()
+{
+  DrawPx(xbasket,ybasket,Violet);   // draw violet dot
+}
 
