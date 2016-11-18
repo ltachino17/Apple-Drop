@@ -87,7 +87,7 @@ void loop()                     // run over and over again
     if (binary > 255)       // restart if all LEDs are filled
     {
       binary = 0;
-      speed = speed - 20;
+      speed = speed - 20;    // speeds up enemies falling
     }
   }
   SetAuxLEDs(binary);   // Show aux leds
@@ -110,7 +110,7 @@ void updateEnemies()
 void spawn(int index)
 {
   // Set y to 7
-  int y = 7;
+  int y = 7;              // set y to 7
   //Generate a random x
   int x;
   do
