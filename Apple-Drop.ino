@@ -53,6 +53,7 @@ int yapple = 9;
 int xbasket = 3;
 int ybasket = 1;
 int binary = 0;
+int speed = 280;
 
 void setup()                    // run once, when the sketch starts
 {
@@ -67,12 +68,13 @@ void loop()                     // run over and over again
   drawApple();
   drawBasket();
   updateEnemies();
+  // Has the enemy been eaten?
   for (int i = 0; i < 3; i++)
   {
-    if (ReadPx(enemies[i].x,enemies[i].y) == Violet)
+    if (ReadPx(enemies[i].x,enemies[i].y) == Violet)  
     {
-      Tone_Start(20000,50);
-      binary = binary / 2;
+      Tone_Start(22000,50);   // Play sound
+      binary = binary / 2;    // turn off one aux LED
     }
   }
   updateApple();
@@ -80,16 +82,17 @@ void loop()                     // run over and over again
   // Has apple been eaten?
   if (ReadPx(xapple,yapple) == Violet)
   {
-    Tone_Start(11100,50);  // Play sound if apple is eaten
+    Tone_Start(10000,50);  // Play sound if apple is eaten
     binary = binary * 2 + 1;  // set aux leds
     if (binary > 255)       // restart if all LEDs are filled
     {
       binary = 0;
+      speed = speed - 20;
     }
   }
   SetAuxLEDs(binary);   // Show aux leds
   DisplaySlate();
-  delay(280);
+  delay(speed);
   ClearSlate();
   
 }
