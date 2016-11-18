@@ -63,10 +63,18 @@ void setup()                    // run once, when the sketch starts
 
 void loop()                     // run over and over again
 {
-  drawEnemies();
+  drawEnemies(); 
   drawApple();
   drawBasket();
   updateEnemies();
+  for (int i = 0; i < 3; i++)
+  {
+    if (ReadPx(enemies[i].x,enemies[i].y) == Violet)
+    {
+      Tone_Start(20000,50);
+      binary = binary / 2;
+    }
+  }
   updateApple();
   updateBasket();
   // Has apple been eaten?
